@@ -84,11 +84,12 @@ fn fizzbuzz_to(n: u64) -> u64 {
         // Print percentage of progress, every 1%, current is repeat, total is n
         if repeat == 0 || repeat % (n / 100) == 0 {
             println!(
-                "{}% | Fizzbuzz: {} | Fizz: {} | Buzz: {}",
+                "{}% | Fizzbuzz: {} | Fizz: {} | Buzz: {} | None: {}",
                 repeat / (n / 100),
                 unsafe { FIZZBUZZCOUNT },
                 unsafe { FIZZCOUNT },
-                unsafe { BUZZCOUNT }
+                unsafe { BUZZCOUNT },
+                unsafe { NORMALCOUNT }
             );
         }
     }
