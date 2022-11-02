@@ -1,3 +1,5 @@
+// Fizz buzz in rust. Includes time of execution, fizz numbers & more.
+
 use std::io;
 use std::time::Instant;
 
@@ -8,21 +10,27 @@ pub static mut FIZZBUZZCOUNT: u64 = 0;
 pub static mut NORMALCOUNT: u64 = 0;
 
 fn main() {
+    // Input number
     let mut input = String::new();
     println!("Enter a number count (recommended 1000000000, one bilion): ");
     io::stdin()
         .read_line(&mut input)
         .expect("Failed to read line");
+    // Convert to u64
     let n: u64 = input.trim().parse().unwrap();
+
+    // If the number is too big, it will take too long to execute. So we limit it to 1000000000.
     if n > 100000000000 {
         println!("Number is too big. This will take ages!");
         return;
     }
 
-    // Measure the time it takes to run the function
+    // Start the timer
     let start = Instant::now();
     let result = fizzbuzz_to(n);
     let duration = start.elapsed();
+
+    // Print the result
     println!(
         "Took {:?} to calculate {} numbers of fizzbuzz",
         duration, result
@@ -34,13 +42,15 @@ fn main() {
         unsafe { FIZZBUZZCOUNT },
         unsafe { NORMALCOUNT }
     );
+
+    // Input nothing to keep the console open
     println!("Press enter to exit");
     io::stdin()
         .read_line(&mut input)
         .expect("Failed to read line");
 }
 
-// Function that returns a boolean value
+// Check if the number is divisible
 fn is_divisible_by(lhs: u64, rhs: u64) -> bool {
     // Corner case, early return
     if rhs == 0 {
@@ -51,33 +61,32 @@ fn is_divisible_by(lhs: u64, rhs: u64) -> bool {
     lhs % rhs == 0
 }
 
-// Functions that "don't" return a value, actually return the unit type `()`
+// Fizzbuzz function
 fn fizzbuzz(n: u64) {
     if is_divisible_by(n, 15) {
         unsafe {
             FIZZBUZZCOUNT += 1;
         }
-    //        println!("fizzbuzz");
+//        println!("fizzbuzz");
     } else if is_divisible_by(n, 3) {
         unsafe {
             FIZZCOUNT += 1;
         }
-    //        println!("fizz");
+//        println!("fizz");
     } else if is_divisible_by(n, 5) {
         unsafe {
             BUZZCOUNT += 1;
         }
-    //        println!("buzz");
+//        println!("buzz");
     } else {
         unsafe {
             NORMALCOUNT += 1;
         }
-        //        println!("{}", n);
+    //        println!("{}", n);
     }
 }
 
-// When a function returns `()`, the return type can be omitted from the
-// signature
+// This function loops the fizzbuzz function
 fn fizzbuzz_to(n: u64) -> u64 {
     for repeat in 1..=n {
         fizzbuzz(repeat);
