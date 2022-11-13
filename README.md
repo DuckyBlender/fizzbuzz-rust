@@ -4,7 +4,7 @@ Simple fizzbuzz written in rust. Includes:
 - Number of fizz, buzz and fizzbuzz
 - Percentage of calculation
 
-# Example:
+# Example
 ![untitled13_w4z3N6Te47](https://user-images.githubusercontent.com/42645784/201551026-e7b33076-bc12-45c6-a959-aa62abe8fff9.png)
 
 # How to run
@@ -12,3 +12,6 @@ Simple fizzbuzz written in rust. Includes:
 - Unzip
 - Go into the folder and run `cargo run --release`
 - Profit
+
+# Todo
+- Progress bar (maybe using https://github.com/a8m/pb)
