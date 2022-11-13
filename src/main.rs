@@ -59,8 +59,7 @@ fn main() {
 
     // Print the result
     println!(
-        "Took {:?} to calculate {} numbers of fizzbuzz",
-        duration, n
+        "Took {:?} to calculate {} numbers of fizzbuzz", duration, n
     );
     println!(
         "Fizzbuzz: {}\nFizz: {}\nBuzz: {}\nNone: {}", fizzbuzzcount, fizzcount, buzzcount, normalcount
