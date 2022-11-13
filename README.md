@@ -3,10 +3,9 @@ Simple fizzbuzz written in rust. Includes:
 - Execution time
 - Number of fizz, buzz and fizzbuzz
 - Percentage of calculation
-- Poorly made code
 
 # Example:
-![image](https://user-images.githubusercontent.com/42645784/199537253-156dbe15-ff34-41af-b334-a674db173e0e.png)
+![untitled13_w4z3N6Te47](https://user-images.githubusercontent.com/42645784/201551026-e7b33076-bc12-45c6-a959-aa62abe8fff9.png)
 
 # How to run
 - Git clone
