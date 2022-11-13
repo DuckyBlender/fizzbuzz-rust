@@ -3,12 +3,6 @@
 use std::io;
 use std::time::Instant;
 
-// public variable
-pub static mut FIZZCOUNT: u64 = 0;
-pub static mut BUZZCOUNT: u64 = 0;
-pub static mut FIZZBUZZCOUNT: u64 = 0;
-pub static mut NORMALCOUNT: u64 = 0;
-
 fn main() {
     // Input number
     let mut input = String::new();
@@ -25,22 +19,51 @@ fn main() {
         return;
     }
 
+    let mut fizzcount: u64 = 0;
+    let mut buzzcount: u64 = 0;
+    let mut fizzbuzzcount: u64 = 0;
+    let mut normalcount: u64 = 0;
+
     // Start the timer
     let start = Instant::now();
-    let result = fizzbuzz_to(n);
+
+    for x in 1..n {
+        match (x % 3, x % 5) {
+            (0, 0) => {
+                //println!("FizzBuzz");
+                fizzbuzzcount += 1;
+            }
+            (0, _) => {
+                //println!("Fizz");
+                fizzcount += 1;
+            }
+            (_, 0) => {
+                //println!("Buzz");
+                buzzcount += 1;
+            }
+            (_, _) => {
+                //println!("{}", x);
+                normalcount += 1;
+            }
+        }
+        // Print percentage of progress, every 1%, "x" is repeat, "n" is total
+        if x == 0 || x % (n / 100) == 0 {
+            println!(
+                "{}% | Fizzbuzz: {} | Fizz: {} | Buzz: {} | None: {}",
+                x / (n / 100), fizzbuzzcount, fizzcount, buzzcount, normalcount
+            );
+        }
+    }
+
     let duration = start.elapsed();
 
     // Print the result
     println!(
         "Took {:?} to calculate {} numbers of fizzbuzz",
-        duration, result
+        duration, n
     );
     println!(
-        "Fizz: {}, Buzz: {}, Fizzbuzz: {}, None: {}",
-        unsafe { FIZZCOUNT },
-        unsafe { BUZZCOUNT },
-        unsafe { FIZZBUZZCOUNT },
-        unsafe { NORMALCOUNT }
+        "Fizzbuzz: {}\nFizz: {}\nBuzz: {}\nNone: {}", fizzbuzzcount, fizzcount, buzzcount, normalcount
     );
 
     // Input nothing to keep the console open
@@ -48,59 +71,4 @@ fn main() {
     io::stdin()
         .read_line(&mut input)
         .expect("Failed to read line");
-}
-
-// Check if the number is divisible
-fn is_divisible_by(lhs: u64, rhs: u64) -> bool {
-    // Corner case, early return
-    if rhs == 0 {
-        return false;
-    }
-
-    // This is an expression, the `return` keyword is not necessary here
-    lhs % rhs == 0
-}
-
-// Fizzbuzz function
-fn fizzbuzz(n: u64) {
-    if is_divisible_by(n, 15) {
-        unsafe {
-            FIZZBUZZCOUNT += 1;
-        }
-//        println!("fizzbuzz");
-    } else if is_divisible_by(n, 3) {
-        unsafe {
-            FIZZCOUNT += 1;
-        }
-//        println!("fizz");
-    } else if is_divisible_by(n, 5) {
-        unsafe {
-            BUZZCOUNT += 1;
-        }
-//        println!("buzz");
-    } else {
-        unsafe {
-            NORMALCOUNT += 1;
-        }
-    //        println!("{}", n);
-    }
-}
-
-// This function loops the fizzbuzz function
-fn fizzbuzz_to(n: u64) -> u64 {
-    for repeat in 1..=n {
-        fizzbuzz(repeat);
-        // Print percentage of progress, every 1%, current is repeat, total is n
-        if repeat == 0 || repeat % (n / 100) == 0 {
-            println!(
-                "{}% | Fizzbuzz: {} | Fizz: {} | Buzz: {} | None: {}",
-                repeat / (n / 100),
-                unsafe { FIZZBUZZCOUNT },
-                unsafe { FIZZCOUNT },
-                unsafe { BUZZCOUNT },
-                unsafe { NORMALCOUNT }
-            );
-        }
-    }
-    n
 }
