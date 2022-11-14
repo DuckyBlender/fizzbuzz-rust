@@ -43,8 +43,8 @@ fn calculate_n(max: u64) -> Count {
 }
 
 fn main() {
-    let mut input = String::new();
     loop {
+        let mut input = String::new();
         // Input number
         print!("Enter a number count or press enter to exit: ");
         io::stdout().flush().unwrap();
