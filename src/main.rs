@@ -68,17 +68,18 @@ fn main() {
             Ok(num) => num,
             Err(_) => {
                 println!("Please enter a valid number!");
-                return;
+                continue;
             }
         };
 
+        // Check if the number is too big
+        if max > 1000000000000 {
+            println!("Number is too big. This would take ages! Try a number around 1000000000 (9 zeros).");
+            continue;
+        }
+
         // Clear input
         input.clear();
-
-        if max > 100000000000 {
-            println!("Number is too big. This would take ages!");
-            return;
-        }
 
         // Start timer
         let start = Instant::now();
