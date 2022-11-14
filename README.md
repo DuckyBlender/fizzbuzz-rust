@@ -2,10 +2,12 @@
 Simple fizzbuzz written in rust. Includes:
 - Execution time
 - Number of fizz, buzz and fizzbuzz
-- Percentage of calculation
+- Average speed
+- Seamless loop of the program
+
 
 # Example
-![untitled13_w4z3N6Te47](https://user-images.githubusercontent.com/42645784/201551026-e7b33076-bc12-45c6-a959-aa62abe8fff9.png)
+![untitled13_ayWgvKUgea](https://user-images.githubusercontent.com/42645784/201700225-b02162f8-ebee-4e9c-9a43-49c52fa8d509.png)
 
 # How to run
 - Git clone
@@ -15,4 +17,3 @@ Simple fizzbuzz written in rust. Includes:
 
 # Todo
 ~- Progress bar (maybe using https://github.com/a8m/pb)~ Too slow for big numbers
-- Seamless loop
