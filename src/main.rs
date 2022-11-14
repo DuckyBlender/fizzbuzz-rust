@@ -1,86 +1,107 @@
 // Fizz buzz in rust. Includes time of execution, fizz numbers & more.
 
-use std::io;
+use std::io::{self, Write};
 use std::time::Instant;
 
+struct Count {
+    fizz: u64,
+    buzz: u64,
+    fizzbuzz: u64,
+    normal: u64,
+}
+
+fn calculate_n(max: u64) -> Count {
+    let mut count = Count {
+        fizz: 0,
+        buzz: 0,
+        fizzbuzz: 0,
+        normal: 0,
+    };
+
+    for x in 1..=max {
+        match (x % 3, x % 5) {
+            (0, 0) => {
+                //println!("FizzBuzz");
+                count.fizzbuzz += 1;
+            }
+            (0, _) => {
+                //println!("Fizz");
+                count.fizz += 1;
+            }
+            (_, 0) => {
+                //println!("Buzz");
+                count.buzz += 1;
+            }
+            (_, _) => {
+                //println!("{}", x);
+                count.normal += 1;
+            }
+        }
+        // TODO: Add a way to print the numbers ever percentage of the way through.
+    }
+    count
+}
+
 fn main() {
+    let mut input = String::new();
     loop {
-        println!("Enter a number count (recommended 1000000000, one bilion): ");
-        
+        // Input number
+        print!("Enter a number count or press enter to exit: ");
+        io::stdout().flush().unwrap();
+
         // Get user input
-        let mut input = String::new();
         match io::stdin().read_line(&mut input) {
-            Ok(_) => {}
+            Ok(_) => (),
             Err(_) => {
-                println!("Invalid input, please enter a number!");
-                return;
+                println!("Error reading input.");
+                continue;
             }
         }
 
+        // Check if user wants to exit
+        if input.trim().is_empty() {
+            break;
+        }
+
         // Convert to u64
-        let n: u64 = match input.trim().parse() {
+        let max: u64 = match input.trim().parse() {
             Ok(num) => num,
             Err(_) => {
                 println!("Please enter a valid number!");
-                continue;
+                return;
             }
         };
 
-        // If the number is too big, it will take too long to execute. So we limit it to 1000000000.
-        if n > 100000000000 {
+        // Clear input
+        input.clear();
+
+        if max > 100000000000 {
             println!("Number is too big. This would take ages!");
             return;
         }
 
-        let mut fizzcount: u64 = 0;
-        let mut buzzcount: u64 = 0;
-        let mut fizzbuzzcount: u64 = 0;
-        let mut normalcount: u64 = 0;
-
-        // Start the timer
+        // Start timer
         let start = Instant::now();
 
-        for x in 1..n {
-            match (x % 3, x % 5) {
-                (0, 0) => {
-                    //println!("FizzBuzz");
-                    fizzbuzzcount += 1;
-                }
-                (0, _) => {
-                    //println!("Fizz");
-                    fizzcount += 1;
-                }
-                (_, 0) => {
-                    //println!("Buzz");
-                    buzzcount += 1;
-                }
-                (_, _) => {
-                    //println!("{}", x);
-                    normalcount += 1;
-                }
-            }
+        // Start calculation function
+        let count = calculate_n(max);
 
-            // TODO: Print percentage of execution, make it work with numbers below 100
-            // No idea how to do this, but it would be cool to see the progress of the program.
-        }
-
+        // End timer
         let duration = start.elapsed();
 
-        // Print the result
-        println!("Took {:?} to calculate {} numbers of fizzbuzz", duration, n);
+        // Calculate the rate of calculating
+        let rate = max as f64 / duration.as_secs_f64();
+
+        // Print results
+        println!(
+            "Took {:?} to calculate {} numbers of fizzbuzz.\nAverage rate per second: ~{}",
+            duration,
+            max,
+            rate.round()
+        );
         println!(
             "Fizzbuzz: {}\nFizz: {}\nBuzz: {}\nNone: {}",
-            fizzbuzzcount, fizzcount, buzzcount, normalcount
+            count.fizzbuzz, count.fizz, count.buzz, count.normal
         );
-
-        // Input nothing to keep the console open
-        println!("Press enter to exit or enter anything to continue (better implementation coming in v5.0)");
-        let mut input = String::new();
-        io::stdin()
-            .read_line(&mut input)
-            .expect("Failed to read line");
-        if input.trim() == "" {
-            break;
-        }
     }
 }
