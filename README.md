@@ -14,4 +14,5 @@ Simple fizzbuzz written in rust. Includes:
 - Profit
 
 # Todo
-- Progress bar (maybe using https://github.com/a8m/pb)
+~- Progress bar (maybe using https://github.com/a8m/pb)~ Too slow for big numbers
+- Seamless loop
